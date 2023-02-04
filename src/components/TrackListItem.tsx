@@ -1,4 +1,3 @@
-import React from "react";
 import { Typography, ListItem, Avatar, IconButton, Stack } from "@mui/material";
 import { Add, Remove, PlayArrow } from "@mui/icons-material";
 
