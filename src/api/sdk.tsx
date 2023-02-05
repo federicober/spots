@@ -110,6 +110,6 @@ export default class SpotifyApi {
       {
         headers: this.__headers(),
       }
-    )
+    );
   }
 }

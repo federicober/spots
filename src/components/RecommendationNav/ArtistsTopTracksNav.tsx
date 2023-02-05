@@ -7,7 +7,7 @@ import {
   AccordionSummary,
   IconButton,
   Stack,
-  Tooltip
+  Tooltip,
 } from "@mui/material";
 
 import { Artist, Track } from "../../api/models";
@@ -39,16 +39,15 @@ export default function ArtistsTopTracksNav({
         <H5>Artist in Playlist</H5>
       </AccordionSummary>
       <AccordionDetails>
-        {artists.slice(0, numArtists).map(
-          (artist) => <LazyTrackAccordion
+        {artists.slice(0, numArtists).map((artist) => (
+          <LazyTrackAccordion
             key={artist.id}
             isTrackAdded={isTrackAdded}
             loadTracks={() => api.artistTopTracks(artist.id, "FR")}
             stageTrack={stageTrack}
             title={artist.name}
           />
-        )
-        }
+        ))}
       </AccordionDetails>
       <Stack direction="row" justifyContent="center">
         {numArtists < artists.length && (

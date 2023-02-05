@@ -1,0 +1,11 @@
+repos:
+  - repo: local
+    hooks:
+      - id: npm-formar
+        name: npm format
+        entry: npm run format
+        language: system
+      - id: npm-lint
+        name: npm lint
+        entry: npm run lint
+        language: system

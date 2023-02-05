@@ -18,16 +18,12 @@ export function TrackListItem({
   playable,
 }: TrackListItemProps) {
   const api = useApi();
-  const artistName = track.artists[0]?.name || "Unknown"
-  const albumUrl = track.album.images[0]?.url || "no"
+  const artistName = track.artists[0]?.name || "Unknown";
+  const albumUrl = track.album.images[0]?.url || "no";
 
   return (
     <ListItem sx={{ pr: 4, pl: 4 }}>
-      <Avatar
-        variant="rounded"
-        src={albumUrl}
-        sx={{ marginRight: 4 }}
-      />
+      <Avatar variant="rounded" src={albumUrl} sx={{ marginRight: 4 }} />
       <Typography>
         <b>{track.name}</b> by {artistName}
       </Typography>

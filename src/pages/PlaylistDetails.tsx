@@ -68,7 +68,7 @@ export default function PlaylistDetails() {
   function isTrackAdded(track: Track) {
     return Boolean(
       tracks.find((playlistTrack) => track.id === playlistTrack.id) ||
-      stagedTracks.find((playlistTrack) => track.id === playlistTrack.id)
+        stagedTracks.find((playlistTrack) => track.id === playlistTrack.id)
     ).valueOf();
   }
   function stageTrack(track: Track) {
@@ -163,11 +163,7 @@ export default function PlaylistDetails() {
                 track.name.toLowerCase().includes(searchedTrack)
               )
               .map((track) => (
-                <TrackListItem
-                  key={track.id}
-                  track={track}
-                  playable={true}
-                />
+                <TrackListItem key={track.id} track={track} playable={true} />
               ))}
           </List>
         </Item>
