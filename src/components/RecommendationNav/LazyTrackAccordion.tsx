@@ -14,9 +14,9 @@ interface LazyAccordionProps {
   title: string;
   stageTrack: (track: Track) => void;
   isTrackAdded: (track: Track) => boolean;
-  loadTracks: Promise<Track[]>;
+  loadTracks: () => Promise<Track[]>;
 }
-export function LazyTrackAccordion({
+export default function LazyTrackAccordion({
   title,
   isTrackAdded,
   loadTracks,
@@ -25,7 +25,7 @@ export function LazyTrackAccordion({
   const [tracks, setTracks] = useState<Track[]>([]);
 
   async function loadAndSetTracks() {
-    setTracks(await loadTracks);
+    setTracks(await loadTracks());
   }
 
   const unaddedTracks = tracks.filter((track) => !isTrackAdded(track));

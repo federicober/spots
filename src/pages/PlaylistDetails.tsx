@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { Search } from "@mui/icons-material";
 
-import useApi from "../api/sdk";
+import useApi from "../api";
 import { H4, Item } from "../core/styled";
 import { Track, Playlist } from "../api/models";
 import { TrackListItem } from "../components/TrackListItem";
@@ -68,7 +68,7 @@ export default function PlaylistDetails() {
   function isTrackAdded(track: Track) {
     return Boolean(
       tracks.find((playlistTrack) => track.id === playlistTrack.id) ||
-        stagedTracks.find((playlistTrack) => track.id === playlistTrack.id)
+      stagedTracks.find((playlistTrack) => track.id === playlistTrack.id)
     ).valueOf();
   }
   function stageTrack(track: Track) {
@@ -150,8 +150,8 @@ export default function PlaylistDetails() {
           <List>
             {stagedTracks.map((track) => (
               <TrackListItem
-                track={track}
                 key={track.id}
+                track={track}
                 onRemove={() => unstageTrack(track)}
               />
             ))}
@@ -163,7 +163,11 @@ export default function PlaylistDetails() {
                 track.name.toLowerCase().includes(searchedTrack)
               )
               .map((track) => (
-                <TrackListItem key={track.id} track={track} playable={true} />
+                <TrackListItem
+                  key={track.id}
+                  track={track}
+                  playable={true}
+                />
               ))}
           </List>
         </Item>

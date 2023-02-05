@@ -3,7 +3,7 @@ import { Divider } from "@mui/material";
 
 import HorizontalScroll from "../components/HorizontalScroll";
 import { Artist, PlaylistShort } from "../api/models";
-import useApi from "../api/sdk";
+import useApi from "../api";
 import PlaylistCard from "../components/PlaylistCard";
 import ArtistCard from "../components/ArtistCard";
 

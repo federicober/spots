@@ -1,7 +1,7 @@
 import { Typography, ListItem, Avatar, IconButton, Stack } from "@mui/material";
 import { Add, Remove, PlayArrow } from "@mui/icons-material";
 
-import useApi from "../api/sdk";
+import useApi from "../api";
 import { Track } from "../api/models";
 
 interface TrackListItemProps {
@@ -18,16 +18,18 @@ export function TrackListItem({
   playable,
 }: TrackListItemProps) {
   const api = useApi();
+  const artistName = track.artists[0]?.name || "Unknown"
+  const albumUrl = track.album.images[0]?.url || "no"
 
   return (
     <ListItem sx={{ pr: 4, pl: 4 }}>
       <Avatar
         variant="rounded"
-        src={track.album.images[0].url}
+        src={albumUrl}
         sx={{ marginRight: 4 }}
       />
       <Typography>
-        <b>{track.name}</b> by {track.artists[0].name}
+        <b>{track.name}</b> by {artistName}
       </Typography>
       <Stack
         direction="row"

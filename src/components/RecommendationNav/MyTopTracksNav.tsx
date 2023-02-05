@@ -2,9 +2,9 @@ import { ExpandMore } from "@mui/icons-material";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 
 import { Track } from "../../api/models";
-import useApi from "../../api/sdk";
+import useApi from "../../api";
 import { H5 } from "../../core/styled";
-import { LazyTrackAccordion } from "./LazyTrackAccordion";
+import LazyTrackAccordion from "./LazyTrackAccordion";
 
 interface MyTopTracksNavProps {
   stageTrack: (track: Track) => void;
@@ -32,7 +32,7 @@ export default function MyTopTracksNav({
           <LazyTrackAccordion
             key={term}
             title={`My top tracks ${title}`}
-            loadTracks={api.myTopTracks(term)}
+            loadTracks={() => api.myTopTracks(term)}
             isTrackAdded={isTrackAdded}
             stageTrack={stageTrack}
           />

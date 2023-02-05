@@ -1,76 +1,62 @@
 import axios, { AxiosError } from "axios";
-import { createContext, useContext } from "react";
 
-import { Artist, PlaylistShort, Playlist, Track, User } from "./models";
+import * as models from "./models";
 
-export class SpotifyApi {
+export default class SpotifyApi {
   token: string;
 
   constructor(token: string) {
     this.token = token;
   }
-  __headers = () => {
+  private __headers() {
     return {
       Authorization: `Bearer ${this.token}`,
       "Content-Type": "application/json",
       Accept: "application/json",
     };
-  };
-  searchArtists = async (artist: string) => {
-    const { data } = await axios.get("https://api.spotify.com/v1/search", {
-      headers: this.__headers(),
-      params: {
-        q: artist,
-        type: "artist",
-      },
-    });
+  }
 
-    return data.artists.items as Artist[];
-  };
-
-  myFollowing = async () => {
+  async myFollowing() {
     const { data } = await axios.get(
       "https://api.spotify.com/v1/me/following?type=artist",
       {
         headers: this.__headers(),
       }
     );
-    return data.artists.items as Artist[];
-  };
+    return data.artists.items as models.Artist[];
+  }
 
-  myTopTracks = async (
-    term: "medium_term" | "long_term" | "short_term" = "medium_term"
-  ) => {
+  async myTopTracks(term: models.Term = "medium_term") {
     const { data } = await axios.get(
       `https://api.spotify.com/v1/me/top/tracks?time_range=${term}`,
       {
         headers: this.__headers(),
       }
     );
-    return data.items as Track[];
-  };
+    return data.items as models.Track[];
+  }
 
-  myPlaylists = async () => {
+  async myPlaylists() {
     const { data } = await axios.get(
       "https://api.spotify.com/v1/me/playlists",
       {
         headers: this.__headers(),
       }
     );
-    return data.items as PlaylistShort[];
-  };
+    return data.items as models.PlaylistShort[];
+  }
 
-  getPlaylist = async (playlistId: string) => {
+  async getPlaylist(playlistId: string) {
     const data = await axios.get(
       `https://api.spotify.com/v1/playlists/${playlistId}`,
       {
         headers: this.__headers(),
       }
     );
-    return data.data as Playlist;
-  };
+    return data.data as models.Playlist;
+  }
 
-  artistTopTracks = async (artistId: string, market: string) => {
+  async artistTopTracks(artistId: string, market: string) {
     const data = await axios.get(
       `https://api.spotify.com/v1/artists/${artistId}/top-tracks`,
       {
@@ -80,10 +66,10 @@ export class SpotifyApi {
         },
       }
     );
-    return data.data.tracks as Track[];
-  };
+    return data.data.tracks as models.Track[];
+  }
 
-  playTrack = async (track: Track) => {
+  async playTrack(track: models.Track) {
     try {
       await axios.put(
         `https://api.spotify.com/v1/me/player/play`,
@@ -105,14 +91,16 @@ export class SpotifyApi {
         console.error(e);
       }
     }
-  };
-  me = async () => {
+  }
+
+  async me() {
     const data = await axios.get(`https://api.spotify.com/v1/me`, {
       headers: this.__headers(),
     });
-    return data.data as User;
-  };
-  addItemsPlaylist = async (playlistId: string, tracks: Track[]) => {
+    return data.data as models.User;
+  }
+
+  async addItemsPlaylist(playlistId: string, tracks: models.Track[]) {
     await axios.post(
       `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
       {
@@ -122,12 +110,6 @@ export class SpotifyApi {
       {
         headers: this.__headers(),
       }
-    );
-  };
-}
-
-export const ApiContext = createContext(new SpotifyApi(""));
-
-export default function useApi() {
-  return useContext(ApiContext);
+    )
+  }
 }

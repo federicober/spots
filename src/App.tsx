@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material";
 
-import { ApiContext, SpotifyApi } from "./api/sdk";
+import { ApiProvider } from "./api/provider";
 import Home from "./pages/Home";
 import PlaylistDetails from "./pages/PlaylistDetails";
 import Header from "./components/Header";
@@ -44,7 +44,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <Header loggedIn={token !== null} onLogout={logout} />
       {token !== null && (
-        <ApiContext.Provider value={new SpotifyApi(token)}>
+        <ApiProvider token={token}>
           <RouterClass>
             <Routes>
               <Route
@@ -54,7 +54,7 @@ function App() {
               <Route path="/*" element={<Home />}></Route>
             </Routes>
           </RouterClass>
-        </ApiContext.Provider>
+        </ApiProvider>
       )}
     </ThemeProvider>
   );

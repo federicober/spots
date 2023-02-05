@@ -1,4 +1,5 @@
 import { Artist, Track } from "../api/models";
+import lodash from "lodash";
 
 export function countArtists(tracks: Track[]) {
   const artistIdCount: Record<string, number> = {};
@@ -16,8 +17,8 @@ export function countArtists(tracks: Track[]) {
     });
   const orderedArtists = Object.entries(artistIdCount)
     .sort((a, b) => b[1] - a[1])
-    .map(([artistId, _]) =>
+    .map(([artistId, _count]) =>
       allArtists.find((artist) => artist.id === artistId)
     );
-  return _.compact(orderedArtists);
+  return lodash.compact(orderedArtists);
 }

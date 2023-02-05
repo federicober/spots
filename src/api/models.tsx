@@ -1,6 +1,8 @@
 export type ExternalUrls = Map<string, string>;
 export type ExternalIds = Map<string, string>;
 
+export type Term = "medium_term" | "long_term" | "short_term";
+
 interface Resource {
   href: string;
   type: string;
