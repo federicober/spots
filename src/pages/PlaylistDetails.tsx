@@ -8,6 +8,7 @@ import {
   Stack,
   Divider,
   Input,
+  Pagination,
 } from "@mui/material";
 import { Search } from "@mui/icons-material";
 
@@ -52,6 +53,8 @@ function TracksTitle({ onChange }: TracksTitleProps) {
   );
 }
 
+const TRACKS_PER_PAGE = 10;
+
 export default function PlaylistDetails() {
   const api = useApi();
 
@@ -63,7 +66,8 @@ export default function PlaylistDetails() {
   const [playlist, setPlaylist] = useState<Playlist | null>(null);
   const [tracks, setTracks] = useState<Track[]>([]);
   const [stagedTracks, setStagedTracks] = useState<Track[]>([]);
-  const [searchedTrack, setSearchedTrack] = useState<string>("");
+  const [searchKey, setSearchKey] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
 
   function isTrackAdded(track: Track) {
     return Boolean(
@@ -71,6 +75,7 @@ export default function PlaylistDetails() {
         stagedTracks.find((playlistTrack) => track.id === playlistTrack.id)
     ).valueOf();
   }
+
   function stageTrack(track: Track) {
     setStagedTracks((prevStagedTracks) => [...prevStagedTracks, track]);
   }
@@ -85,6 +90,21 @@ export default function PlaylistDetails() {
     setTracks((prevTracks) => [...stagedTracks, ...prevTracks]);
     setStagedTracks([]);
   }
+
+  function isSearched(track: Track) {
+    return track.name.toLowerCase().includes(searchKey);
+  }
+  function onSearchChange(searchString: string) {
+    setSearchKey(searchString);
+    setPage(1);
+  }
+
+  const sortedTracks = tracks.sort((a, b) =>
+    b.artists[0].name.localeCompare(a.artists[0].name)
+  );
+  const searchedTracks = sortedTracks.filter(isSearched);
+  const totalPages = Math.floor(searchedTracks.length / TRACKS_PER_PAGE);
+
   // load Playlist info from id
   useEffect(() => {
     const fetchData = async () => {
@@ -144,8 +164,13 @@ export default function PlaylistDetails() {
           isTrackAdded={isTrackAdded}
           stageTrack={stageTrack}
         />
-        <Item>
-          <TracksTitle onChange={setSearchedTrack} />
+        <Item
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <TracksTitle onChange={onSearchChange} />
           <Divider sx={{ marginTop: 4, marginBottom: 4 }} />
           <List>
             {stagedTracks.map((track) => (
@@ -155,17 +180,21 @@ export default function PlaylistDetails() {
                 onRemove={() => unstageTrack(track)}
               />
             ))}
-            {tracks
-              .sort((a, b) =>
-                b.artists[0].name.localeCompare(a.artists[0].name)
-              )
-              .filter((track) =>
-                track.name.toLowerCase().includes(searchedTrack)
-              )
+            {searchedTracks
+              .slice((page - 1) * TRACKS_PER_PAGE, page * TRACKS_PER_PAGE)
               .map((track) => (
                 <TrackListItem key={track.id} track={track} playable={true} />
               ))}
           </List>
+          <Pagination
+            count={totalPages}
+            variant="outlined"
+            page={page}
+            onChange={(event: React.ChangeEvent<unknown>, value: number) =>
+              setPage(value)
+            }
+            sx={{ m: "auto" }}
+          />
         </Item>
       </Stack>
     </>
