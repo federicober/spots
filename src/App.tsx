@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material";
 
+import { LOGIN_URL } from "./auth";
 import { ApiProvider } from "./api/provider";
 import Header from "./components/Header";
 import Home from "./pages/Home";
@@ -10,12 +11,17 @@ import ArtistDetails from "./pages/ArtistDetails";
 
 const RouterClass = HashRouter;
 
+interface LocalStorageToken {
+  token: string;
+  exp: number;
+}
+
 function App() {
   const [token, setToken] = useState<string | null>(null);
 
   const logout = () => {
     setToken(null);
-    window.localStorage.removeItem("token");
+    window.localStorage.removeItem("auth:bearer_token");
   };
 
   const theme = createTheme({
@@ -23,27 +29,42 @@ function App() {
   });
 
   useEffect(() => {
-    const hash = window.location.hash;
-    let tokenCandidate = window.localStorage.getItem("token");
+    const now = Math.floor(Date.now() / 1000);
 
-    if (!tokenCandidate && hash) {
-      const queryParam = hash
-        .substring(1)
-        .split("&")
-        .find((elem) => elem.startsWith("access_token"));
-      if (queryParam === undefined) throw "hash does not contain access_token";
-      tokenCandidate = queryParam.split("=")[1];
+    const hash = window.location.hash.substring(1);
 
-      window.location.hash = "/";
-      window.localStorage.setItem("token", tokenCandidate);
+    // Because of weird router, search can end up in hash
+    let search = window.location.search;
+    if (hash.includes("access_token")) {
+      search = "?" + hash;
     }
+    const searchParams = new URLSearchParams(search);
+    const tokenFromSearch = searchParams.get("access_token");
 
-    setToken(tokenCandidate);
+    // always use token from search if exists because more recent
+    if (tokenFromSearch) {
+      const exp = parseInt(searchParams.get("expires_in") || "3600") + now;
+      window.localStorage.setItem(
+        "auth:bearer_token",
+        JSON.stringify({ token: tokenFromSearch, exp: exp })
+      );
+      setToken(tokenFromSearch);
+      window.location.hash = "/";
+    }
+    const tokenFromLocalStorage: LocalStorageToken = JSON.parse(
+      localStorage.getItem("auth:bearer_token") || "{}" // empty token
+    );
+    if (tokenFromLocalStorage.exp > now && tokenFromLocalStorage.token) {
+      setToken(tokenFromLocalStorage.token);
+      window.location.hash = "/";
+    } else {
+      window.location.href = LOGIN_URL;
+    }
   }, []);
 
   return (
     <ThemeProvider theme={theme}>
-      <Header loggedIn={token !== null} onLogout={logout} />
+      <Header onLogout={logout} />
       {token !== null && (
         <ApiProvider token={token}>
           <RouterClass>

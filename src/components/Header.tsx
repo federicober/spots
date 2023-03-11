@@ -1,9 +1,7 @@
 import { LibraryMusic } from "@mui/icons-material";
 import { AppBar, Button, IconButton, Toolbar, Typography } from "@mui/material";
-import { LOGIN_URL } from "../auth";
 
 interface HeaderProps {
-  loggedIn: boolean;
   onLogout: () => void;
 }
 export default function Header(props: HeaderProps) {
@@ -27,15 +25,9 @@ export default function Header(props: HeaderProps) {
         >
           Spots
         </Typography>
-        {props.loggedIn ? (
-          <Button color="inherit" onClick={props.onLogout}>
-            Logout
-          </Button>
-        ) : (
-          <Button color="inherit" href={LOGIN_URL}>
-            Login
-          </Button>
-        )}
+        <Button color="inherit" onClick={props.onLogout}>
+          Logout
+        </Button>
       </Toolbar>
     </AppBar>
   );
