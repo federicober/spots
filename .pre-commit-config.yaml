@@ -1,11 +1,13 @@
 repos:
   - repo: local
     hooks:
-      - id: npm-formar
+      - id: npm-format
         name: npm format
         entry: npm run format
         language: system
+        files: .*\.(ts|tsx|js|jsx|json|ya?ml)
       - id: npm-lint
         name: npm lint
         entry: npm run lint
         language: system
+        files: .*\.(ts|tsx|js|jsx|json|ya?git ml)
