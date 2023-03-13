@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
+
 import { useParams } from "react-router-dom";
-import {
-  Typography,
-  List,
-  IconButton,
-  Button,
-  Stack,
-  Divider,
-  Input,
-  Pagination,
-} from "@mui/material";
-import { Search } from "@mui/icons-material";
+import Search from "@mui/icons-material/Search";
+import Save from "@mui/icons-material/Save";
+import Typography from "@mui/material/Typography";
+import List from "@mui/material/List";
+import IconButton from "@mui/material/IconButton";
+import Stack from "@mui/material/Stack";
+import Divider from "@mui/material/Divider";
+import Input from "@mui/material/Input";
+import Pagination from "@mui/material/Pagination";
 
 import useApi from "../api";
 import { H4, Item } from "../core/styled";
@@ -19,10 +18,12 @@ import { TrackListItem } from "../components/TrackListItem";
 import RecommendationNav from "../components/RecommendationNav";
 
 interface TracksTitleProps {
-  onChange: (value: string) => void;
+  onSearchChange: (value: string) => void;
+  onSave: () => void;
+  needsSave: boolean;
 }
 
-function TracksTitle({ onChange }: TracksTitleProps) {
+function TracksTitle({ onSearchChange, onSave, needsSave }: TracksTitleProps) {
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
   return (
     <>
@@ -34,6 +35,11 @@ function TracksTitle({ onChange }: TracksTitleProps) {
         >
           Tracks
         </H4>
+        {needsSave && (
+          <IconButton onClick={onSave}>
+            <Save />
+          </IconButton>
+        )}
         <IconButton onClick={() => setSearchOpen((prev) => !prev)}>
           <Search />
         </IconButton>
@@ -44,7 +50,7 @@ function TracksTitle({ onChange }: TracksTitleProps) {
             placeholder="Track Name"
             sx={{ width: "50%", marginLeft: "auto" }}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              onChange(e.target.value.toLowerCase())
+              onSearchChange(e.target.value.toLowerCase())
             }
           />
         </Stack>
@@ -138,24 +144,12 @@ export default function PlaylistDetails() {
   return (
     <>
       <Stack
-        spacing={10}
-        direction="row"
         alignItems="center"
         justifyContent="center"
+        sx={{ margin: "auto" }}
       >
-        <Stack
-          alignItems="center"
-          justifyContent="center"
-          sx={{ margin: "auto" }}
-        >
-          <Typography variant="h3">{playlist.name}</Typography>
-          <Typography>by {playlist.owner.display_name}</Typography>
-        </Stack>
-        {stagedTracks.length > 0 && (
-          <Button variant="contained" onClick={saveChanges}>
-            Save
-          </Button>
-        )}
+        <Typography variant="h3">{playlist.name}</Typography>
+        <Typography>by {playlist.owner.display_name}</Typography>
       </Stack>
       <Divider sx={{ marginTop: 8, marginBottom: 8 }} />
       <Stack spacing={10} direction={{ sm: "column", md: "row" }}>
@@ -170,7 +164,11 @@ export default function PlaylistDetails() {
             flexDirection: "column",
           }}
         >
-          <TracksTitle onChange={onSearchChange} />
+          <TracksTitle
+            onSearchChange={onSearchChange}
+            onSave={saveChanges}
+            needsSave={stagedTracks.length > 0}
+          />
           <Divider sx={{ marginTop: 4, marginBottom: 4 }} />
           <List>
             {stagedTracks.map((track) => (
@@ -193,7 +191,7 @@ export default function PlaylistDetails() {
             onChange={(event: React.ChangeEvent<unknown>, value: number) =>
               setPage(value)
             }
-            sx={{ m: "auto" }}
+            sx={{ m: "auto", mt: 2 }}
           />
         </Item>
       </Stack>
