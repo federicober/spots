@@ -7,7 +7,7 @@
   "scripts": {
     "predeploy": "tsc && vite build --mode prod",
     "deploy": "gh-pages -d dist",
-    "dev": "vite",
+    "dev": "vite --port=4000",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "format": "prettier --write .",
