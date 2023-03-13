@@ -1,5 +1,11 @@
-import { Typography, ListItem, Avatar, IconButton, Stack } from "@mui/material";
-import { Add, Remove, PlayArrow } from "@mui/icons-material";
+import Add from "@mui/icons-material/Add";
+import Remove from "@mui/icons-material/Remove";
+import PlayArrow from "@mui/icons-material/PlayArrow";
+import Typography from "@mui/material/Typography";
+import ListItem from "@mui/material/ListItem";
+import Avatar from "@mui/material/Avatar";
+import IconButton from "@mui/material/IconButton";
+import Stack from "@mui/material/Stack";
 
 import useApi from "../api";
 import { Track } from "../api/models";

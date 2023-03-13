@@ -1,5 +1,6 @@
-import { Paper, Typography } from "@mui/material";
 import React from "react";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
 
 interface HorizontalScrollProps {
   title: string;

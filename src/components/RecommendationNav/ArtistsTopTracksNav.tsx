@@ -1,14 +1,14 @@
 import { useState } from "react";
 
-import { AddCircle, ExpandMore, RemoveCircle } from "@mui/icons-material";
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  IconButton,
-  Stack,
-  Tooltip,
-} from "@mui/material";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import AddCircle from "@mui/icons-material/AddCircle";
+import RemoveCircle from "@mui/icons-material/RemoveCircle";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import IconButton from "@mui/material/IconButton";
+import Stack from "@mui/material/Stack";
+import Tooltip from "@mui/material/Tooltip";
 
 import { Artist, Track } from "../../api/models";
 import useApi from "../../api";

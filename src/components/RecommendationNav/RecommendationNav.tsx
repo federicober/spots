@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
-import { Divider, Stack } from "@mui/material";
+import Divider from "@mui/material/Divider";
+import Stack from "@mui/material/Stack";
 
 import { Artist, Track } from "../../api/models";
 import { Item, H4 } from "../../core/styled";

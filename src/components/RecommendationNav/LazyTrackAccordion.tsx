@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { ExpandMore } from "@mui/icons-material";
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Typography,
-} from "@mui/material";
+
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import Typography from "@mui/material/Typography";
+
 import { Track } from "../../api/models";
 import { H6 } from "../../core/styled";
 import { TrackListItem } from "../TrackListItem";
