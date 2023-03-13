@@ -22,13 +22,14 @@ export default function LazyTrackAccordion({
   loadTracks,
   stageTrack,
 }: LazyAccordionProps) {
-  const [tracks, setTracks] = useState<Track[]>([]);
+  const [tracks, setTracks] = useState<Track[] | null>(null);
 
   async function loadAndSetTracks() {
     setTracks(await loadTracks());
   }
 
-  const unaddedTracks = tracks.filter((track) => !isTrackAdded(track));
+  const unaddedTracks =
+    tracks !== null ? tracks.filter((track) => !isTrackAdded(track)) : [];
 
   return (
     <Accordion>
@@ -36,7 +37,11 @@ export default function LazyTrackAccordion({
         <H6>{title}</H6>
       </AccordionSummary>
       <AccordionDetails>
-        {unaddedTracks.length > 0 ? (
+        {tracks === null ? (
+          <Typography color="grey">Loading...</Typography>
+        ) : unaddedTracks.length === 0 ? (
+          <Typography color="grey">All songs are in playlist</Typography>
+        ) : (
           unaddedTracks.map((track) => (
             <TrackListItem
               key={track.id}
@@ -45,8 +50,6 @@ export default function LazyTrackAccordion({
               onAdd={() => stageTrack(track)}
             />
           ))
-        ) : (
-          <Typography color="grey">All songs are in playlist</Typography>
         )}
       </AccordionDetails>
     </Accordion>
