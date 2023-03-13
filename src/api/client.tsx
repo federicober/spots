@@ -12,18 +12,19 @@ async function _fromCache<T>(
   expirySeconds: number
 ): Promise<T> {
   let cached: Cached<T> | null = null;
+  const completeCacheKey = "cache:" + cacheKey;
   try {
-    cached = JSON.parse(localStorage.getItem(cacheKey) || "");
+    cached = JSON.parse(localStorage.getItem(completeCacheKey) || "");
   } catch (e) {
     cached = null;
   }
-  const now = Date.now();
+  const now = Math.floor(Date.now() / 1000);
   if (cached !== null && cached.exp > now) {
     return cached.data;
   }
   const data = await promiseFactory();
   const toCache: Cached<T> = { data: data, exp: now + expirySeconds };
-  localStorage.setItem(cacheKey, JSON.stringify(toCache));
+  localStorage.setItem(completeCacheKey, JSON.stringify(toCache));
   return data;
 }
 
