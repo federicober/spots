@@ -43,7 +43,7 @@ export default function Home() {
           <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
           <HorizontalScroll title="Artists">
             {artists.map((artist) => (
-              <ArtistCard key={artist.id} artist={artist} />
+              <ArtistCard key={artist.id} artist={artist} size={300} />
             ))}
           </HorizontalScroll>
         </>

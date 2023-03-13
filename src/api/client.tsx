@@ -1,4 +1,4 @@
-import { Term, Track } from "./models";
+import { Artist, Term, Track } from "./models";
 import SpotifyApi from "./sdk";
 
 interface Cached<T> {
@@ -54,6 +54,14 @@ export default class CachedSpotifyApi extends SpotifyApi {
       cacheKey,
       () => SpotifyApi.prototype.artistTopTracks.call(this, artistId, market),
       DAY
+    );
+  }
+  async artistRelatedArtists(artistId: string): Promise<Artist[]> {
+    const cacheKey = `api:artistRelatedArtists:${artistId}`;
+    return _fromCache(
+      cacheKey,
+      () => SpotifyApi.prototype.artistRelatedArtists.call(this, artistId),
+      WEEK
     );
   }
 }

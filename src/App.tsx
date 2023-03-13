@@ -3,9 +3,10 @@ import { HashRouter, Route, Routes } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material";
 
 import { ApiProvider } from "./api/provider";
+import Header from "./components/Header";
 import Home from "./pages/Home";
 import PlaylistDetails from "./pages/PlaylistDetails";
-import Header from "./components/Header";
+import ArtistDetails from "./pages/ArtistDetails";
 
 const RouterClass = HashRouter;
 
@@ -51,6 +52,7 @@ function App() {
                 path="/playlist/:playlistId"
                 element={<PlaylistDetails />}
               />
+              <Route path="/artist/:artistId" element={<ArtistDetails />} />
               <Route path="/*" element={<Home />}></Route>
             </Routes>
           </RouterClass>
