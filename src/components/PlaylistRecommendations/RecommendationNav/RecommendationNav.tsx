@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 
-import { Artist, Track } from "../../api/models";
-import { Item, H4 } from "../../core/styled";
-import { countArtists } from "../../utils/tracks";
+import { Artist, Track } from "../../../api/models";
+import { Item, H4 } from "../../../core/styled";
+import { countArtists } from "../../../utils/tracks";
 import ArtistsTopTracksNav from "./ArtistsTopTracksNav";
 import MyTopTracksNav from "./MyTopTracksNav";
 import RelatedArtistsTopTracksNav from "./RelatedArtistsTopTracksNav";

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import Divider from "@mui/material/Divider";
 
-import HorizontalScroll from "../components/HorizontalScroll";
+import HorizontalScroll from "../components/common/HorizontalScroll";
 import { Artist, PlaylistShort } from "../api/models";
 import useApi from "../api";
 import PlaylistCard from "../components/PlaylistCard";

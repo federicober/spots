@@ -8,7 +8,7 @@ import Divider from "@mui/material/Divider";
 
 import useApi from "../api";
 import { Track, Artist } from "../api/models";
-import { TrackListItem } from "../components/TrackListItem";
+import TrackListItem from "../components/TrackListItem";
 import ListItem from "@mui/material/ListItem";
 
 export default function ArtistDetails() {

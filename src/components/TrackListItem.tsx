@@ -17,7 +17,7 @@ interface TrackListItemProps {
   playable?: boolean;
 }
 
-export function TrackListItem({
+export default function TrackListItem({
   track,
   onAdd,
   onRemove,

@@ -1,4 +1,4 @@
-import { Artist, Track } from "../../api/models";
+import { Artist, Track } from "../../../api/models";
 import ArtistTopTracksNav from "./ArtistTopTracksNav";
 
 interface ArtistsTopTracksNavProps {

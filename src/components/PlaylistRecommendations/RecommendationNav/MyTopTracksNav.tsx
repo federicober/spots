@@ -3,9 +3,9 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 
-import { Track } from "../../api/models";
-import useApi from "../../api";
-import { H5 } from "../../core/styled";
+import { Track } from "../../../api/models";
+import useApi from "../../../api";
+import { H5 } from "../../../core/styled";
 import LazyTrackAccordion from "./LazyTrackAccordion";
 
 interface MyTopTracksNavProps {

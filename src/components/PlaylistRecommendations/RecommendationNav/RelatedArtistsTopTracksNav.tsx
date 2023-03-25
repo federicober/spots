@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
-import { Artist, Track } from "../../api/models";
-import useApi from "../../api";
-import { weightedCompact } from "../../utils/tracks";
+import { Artist, Track } from "../../../api/models";
+import useApi from "../../../api";
+import { weightedCompact } from "../../../utils/tracks";
 import ArtistTopTracksNav from "./ArtistTopTracksNav";
 
 interface RelatedArtistsTopTracksNavProps {

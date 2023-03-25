@@ -6,9 +6,9 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 
-import { Track } from "../../api/models";
-import { H6 } from "../../core/styled";
-import { TrackListItem } from "../TrackListItem";
+import { Track } from "../../../api/models";
+import { H6 } from "../../../core/styled";
+import TrackListItem from "../../TrackListItem";
 
 interface LazyAccordionProps {
   title: string;

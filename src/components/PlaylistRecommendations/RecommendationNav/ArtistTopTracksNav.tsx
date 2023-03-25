@@ -10,9 +10,9 @@ import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
 
-import { Artist, Track } from "../../api/models";
-import useApi from "../../api";
-import { H5 } from "../../core/styled";
+import { Artist, Track } from "../../../api/models";
+import useApi from "../../../api";
+import { H5 } from "../../../core/styled";
 import LazyTrackAccordion from "./LazyTrackAccordion";
 
 const PAGE_SIZE = 5;
