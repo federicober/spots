@@ -54,12 +54,36 @@ export default class SpotifyApi {
     return data.items as models.PlaylistShort[];
   }
 
-  async playTrack(track: models.Track) {
+  // PLAYER
+  async playTrack(track: models.Track, ...otherTracks: models.Track[]) {
     try {
       await axios.put(
         `https://api.spotify.com/v1/me/player/play`,
         {
-          uris: [track.uri],
+          uris: [track, ...otherTracks].map((track_) => track_.uri),
+        },
+        {
+          headers: this.__headers(),
+        }
+      );
+    } catch (e) {
+      const err = e as AxiosError;
+      if (
+        err.response !== undefined &&
+        err.request.data.reason === "NO_ACTIVE_DEVICE"
+      ) {
+        return "NO_ACTIVE_DEVICE";
+      } else {
+        console.error(e);
+      }
+    }
+  }
+  async playContext(contextUri: string) {
+    try {
+      await axios.put(
+        `https://api.spotify.com/v1/me/player/play`,
+        {
+          context_uri: contextUri,
         },
         {
           headers: this.__headers(),

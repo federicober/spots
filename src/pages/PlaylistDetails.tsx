@@ -10,6 +10,7 @@ import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
 import Input from "@mui/material/Input";
 import Pagination from "@mui/material/Pagination";
+import PlayArrow from "@mui/icons-material/PlayArrow";
 
 import useApi from "../api";
 import { H4, Item } from "../core/styled";
@@ -106,7 +107,7 @@ export default function PlaylistDetails() {
   }
 
   const sortedTracks = tracks.sort((a, b) =>
-    b.artists[0].name.localeCompare(a.artists[0].name)
+    a.artists[0].name.localeCompare(b.artists[0].name)
   );
   const searchedTracks = sortedTracks.filter(isSearched);
   const totalPages = Math.floor(searchedTracks.length / TRACKS_PER_PAGE);
@@ -150,6 +151,9 @@ export default function PlaylistDetails() {
       >
         <Typography variant="h3">{playlist.name}</Typography>
         <Typography>by {playlist.owner.display_name}</Typography>
+        <IconButton onClick={() => api.playContext(playlist.uri)}>
+          <PlayArrow />
+        </IconButton>
       </Stack>
       <Divider sx={{ marginTop: 8, marginBottom: 8 }} />
       <Stack spacing={10} direction={{ sm: "column", md: "row" }}>
