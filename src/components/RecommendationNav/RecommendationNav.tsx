@@ -8,6 +8,7 @@ import { Item, H4 } from "../../core/styled";
 import { countArtists } from "../../utils/tracks";
 import ArtistsTopTracksNav from "./ArtistsTopTracksNav";
 import MyTopTracksNav from "./MyTopTracksNav";
+import RelatedArtistsTopTracksNav from "./RelatedArtistsTopTracksNav";
 
 interface RecommendationNavProps {
   tracks: Track[];
@@ -36,6 +37,11 @@ export default function RecommendationNav({
         isTrackAdded={isTrackAdded}
       />
       <MyTopTracksNav stageTrack={stageTrack} isTrackAdded={isTrackAdded} />
+      <RelatedArtistsTopTracksNav
+        artistsInPlaylist={artists}
+        stageTrack={stageTrack}
+        isTrackAdded={isTrackAdded}
+      />
     </Item>
   );
 }

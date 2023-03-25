@@ -27,7 +27,7 @@ export default function MyTopTracksNav({
   return (
     <Accordion>
       <AccordionSummary expandIcon={<ExpandMore />}>
-        <H5>My Top Tracks</H5>
+        <H5>My top tracks</H5>
       </AccordionSummary>
       <AccordionDetails>
         {TERMS.map(([title, term]) => (
