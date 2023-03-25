@@ -124,17 +124,11 @@ export default function PlaylistDetails() {
   useEffect(() => {
     async function fetchData() {
       if (playlist !== null) {
-        if (playlist.tracks.total <= playlist.tracks.limit) {
-          setTracks(
-            playlist.tracks.items.map((addedtrack) => addedtrack.track)
-          );
-        } else {
-          // TODO
-          setTracks(
-            playlist.tracks.items.map((addedtrack) => addedtrack.track)
-          );
-          console.error("Missing tracks");
-        }
+        setTracks(
+          (await api.getPlaylistTracks(playlist)).map(
+            (addedtrack) => addedtrack.track
+          )
+        );
       }
     }
     fetchData();

@@ -113,6 +113,37 @@ export default class SpotifyApi {
     return data.data as models.Playlist;
   }
 
+  private async _getPlaylistTracks(
+    playlistId: string,
+    limit: number,
+    offset: number
+  ) {
+    const data = await axios.get(
+      `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+      {
+        headers: this.__headers(),
+        params: { limit: limit, offset: offset },
+      }
+    );
+    return data.data.items as models.AddedTrack[];
+  }
+
+  async getPlaylistTracks(playlist: models.Playlist) {
+    const pageSize = playlist.tracks.limit;
+    const numPages = Math.floor(playlist.tracks.total / playlist.tracks.limit);
+
+    const allTracks = await Promise.all(
+      [...Array(numPages).keys()].map((page) =>
+        this._getPlaylistTracks(
+          playlist.id,
+          playlist.tracks.limit,
+          (page + 1) * pageSize
+        )
+      )
+    );
+    return [...playlist.tracks.items, ...allTracks.flat()];
+  }
+
   async addItemsPlaylist(playlistId: string, tracks: models.Track[]) {
     await axios.post(
       `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
