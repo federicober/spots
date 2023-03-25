@@ -31,7 +31,12 @@ export default function RelatedArtistsTopTracksNav({
             [artist, artistsInPlaylist.length - idx] as [Artist, number]
         )
       );
-      setRelatedArtists(weightedCompact(r));
+      setRelatedArtists(
+        weightedCompact(r).filter(
+          (relatedArtist) =>
+            !artistsInPlaylist.find((artist) => artist.id === relatedArtist.id)
+        )
+      );
     }
     fetchData();
   }, [artistsInPlaylist]);
