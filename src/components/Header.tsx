@@ -1,6 +1,9 @@
-import { LibraryMusic } from "@mui/icons-material";
-import { AppBar, Button, IconButton, Toolbar, Typography } from "@mui/material";
-
+import AppBar from "@mui/material/AppBar";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import LibraryMusic from "@mui/icons-material/LibraryMusic";
 interface HeaderProps {
   onLogout: () => void;
 }
