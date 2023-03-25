@@ -23,7 +23,7 @@ export default function Header(props: HeaderProps) {
         <Typography
           variant="h4"
           component="a"
-          href="/"
+          href={import.meta.env.BASE_URL}
           sx={{ flexGrow: 1, textDecoration: "none", color: "inherit" }}
         >
           Spots
