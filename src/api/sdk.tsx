@@ -2,6 +2,16 @@ import axios, { AxiosError } from "axios";
 
 import * as models from "./models";
 
+interface PaginationResponse<T> {
+  href: string;
+  limit: number;
+  next: string | null;
+  offset: string;
+  previous: string | null;
+  total: number;
+  items: T[];
+}
+
 export default class SpotifyApi {
   token: string;
 
@@ -44,14 +54,28 @@ export default class SpotifyApi {
     return data.items as models.Track[];
   }
 
-  async myPlaylists() {
+  private async __myPlaylists(limit: number, offset: number) {
     const { data } = await axios.get(
       "https://api.spotify.com/v1/me/playlists",
       {
         headers: this.__headers(),
+        params: { limit: limit, offset: offset },
       }
     );
-    return data.items as models.PlaylistShort[];
+    return data as PaginationResponse<models.PlaylistShort>;
+  }
+
+  async myPlaylists() {
+    const limit = 20;
+    const firstResult = await this.__myPlaylists(limit, 0);
+    const numPages = Math.floor(firstResult.total / firstResult.limit);
+
+    const allTracks = await Promise.all(
+      [...Array(numPages).keys()].map((page) =>
+        this.__myPlaylists(limit, (page + 1) * limit)
+      )
+    );
+    return [...firstResult.items, ...allTracks.flatMap((pag) => pag.items)];
   }
 
   // PLAYER

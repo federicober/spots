@@ -10,6 +10,7 @@ import PlayArrow from "@mui/icons-material/PlayArrow";
 import useApi from "../api";
 import { Track, Playlist } from "../api/models";
 import PlaylistRecommendations from "../components/PlaylistRecommendations";
+import TabExplorer from "../components/common/TabExplorer";
 
 export default function PlaylistDetails() {
   const api = useApi();
@@ -60,12 +61,29 @@ export default function PlaylistDetails() {
         </IconButton>
       </Stack>
       <Divider sx={{ marginTop: 8, marginBottom: 8 }} />
-      <PlaylistRecommendations
-        playlist={playlist}
-        tracks={tracks}
-        addTracks={(tracks) =>
-          setTracks((prevTracks) => [...tracks, ...prevTracks])
-        }
+      <TabExplorer
+        tabs={[
+          {
+            title: "Recommend",
+            component: (
+              <PlaylistRecommendations
+                playlist={playlist}
+                tracks={tracks}
+                addTracks={(tracks) =>
+                  setTracks((prevTracks) => [...tracks, ...prevTracks])
+                }
+              />
+            ),
+          },
+          {
+            title: "Deduplicate",
+            component: <Typography variant="h4">In progress...</Typography>,
+          },
+          {
+            title: "Analyze",
+            component: <Typography variant="h4">In progress...</Typography>,
+          },
+        ]}
       />
     </>
   );

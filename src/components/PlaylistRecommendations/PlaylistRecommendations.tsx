@@ -13,7 +13,7 @@ import useApi from "../../api";
 import { H4, Item } from "../../core/styled";
 import { Track, Playlist } from "../../api/models";
 import TrackListItem from "../../components/TrackListItem";
-import RecommendationNav from "./RecommendationNav";
+import RecommendationNav from "./RecommendationMenu";
 
 interface TracksTitleProps {
   onSearchChange: (value: string) => void;
