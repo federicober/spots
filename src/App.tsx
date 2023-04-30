@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { HashRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import createTheme from "@mui/material/styles/createTheme";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
 
@@ -9,8 +9,6 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import PlaylistDetails from "./pages/PlaylistDetails";
 import ArtistDetails from "./pages/ArtistDetails";
-
-const RouterClass = HashRouter;
 
 interface LocalStorageToken {
   token: string;
@@ -68,7 +66,7 @@ function App() {
       <Header onLogout={logout} />
       {token !== null && (
         <ApiProvider token={token}>
-          <RouterClass>
+          <BrowserRouter>
             <Routes>
               <Route
                 path="/playlist/:playlistId"
@@ -77,7 +75,7 @@ function App() {
               <Route path="/artist/:artistId" element={<ArtistDetails />} />
               <Route path="/*" element={<Home />}></Route>
             </Routes>
-          </RouterClass>
+          </BrowserRouter>
         </ApiProvider>
       )}
     </ThemeProvider>
